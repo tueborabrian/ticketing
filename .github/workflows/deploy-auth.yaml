@@ -22,3 +22,12 @@ jobs:
         run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
       - name: Push Docker Image
         run: docker push tueborabrian/auth
+      - name: Install Doctl
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+      - name: Set Doctl Context
+        run: doctl kubernetes cluster kubeconfig save ticketing
+      - name: Restart Auth Deployment
+        run: kubectl rollout restart deployment auth-depl
+      
