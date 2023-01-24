@@ -1,4 +1,4 @@
-name: tests-payments
+name: tests-tickets
 
 on:
   pull_request
@@ -11,6 +11,6 @@ jobs:
         uses: actions/checkout@v2
       - name: Test
         run: |
-          cd payments
+          cd tickets
           npm install
           npm run test:ci
