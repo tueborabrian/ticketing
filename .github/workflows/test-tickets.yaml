@@ -3,7 +3,7 @@ name: test-tickets
 on:
   pull_request:
     paths:
-      - path: 'tickets/**'
+      - 'tickets/**'
   
 jobs:
   build:
