@@ -1,9 +1,9 @@
-name: tests-payments
+name: test-auth
 
 on:
   pull_request:
     paths:
-      - 'orders/**'
+      - 'auth/**'
   
 jobs:
   build:
@@ -13,6 +13,6 @@ jobs:
         uses: actions/checkout@v2
       - name: Test
         run: |
-          cd payments
+          cd auth
           npm install
           npm run test:ci
