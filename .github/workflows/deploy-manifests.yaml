@@ -20,4 +20,6 @@ jobs:
       - name: Set Doctl Context
         run: doctl kubernetes cluster kubeconfig save ticketing
       - name: Apply Kubernetes Manifests
-        run: kubectl apply -f infra/k8s
+        run: |
+          kubectl apply -k infra/k8s
+          kubectl apply -k infra/k8s-prod
