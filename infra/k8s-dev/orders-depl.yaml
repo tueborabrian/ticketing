@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: orders
-          image: us.gcr.io/ticketing-dev-375004/orders
+          image: tueborabrian/orders
           env:
             - name: STAN_URL
               value: http://stan-srv:4222
