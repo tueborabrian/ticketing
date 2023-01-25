@@ -1,0 +1,33 @@
+name: deploy-tickets
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'tickets/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Build Docker Image
+        run: docker build -t tueborabrian/tickets tickets
+      - name: Login to Docker
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+      - name: Push Docker Image
+        run: docker push tueborabrian/tickets
+      - name: Install Doctl
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+      - name: Set Doctl Context
+        run: doctl kubernetes cluster kubeconfig save ticketing
+      - name: Restart Tickets Deployment
+        run: kubectl rollout restart deployment tickets-depl
+      
